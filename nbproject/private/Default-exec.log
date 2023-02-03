@@ -1,0 +1,11 @@
+called: /usr/bin/g++
+	/Users/peter/NetBeansProjects/options_dynamic_hedging
+	/usr/bin/g++
+	-w
+	-Iinclude/
+	-L/usr/local/Cellar/quantlib/1.19/lib
+	-lQuantLib
+	src/main.cpp
+	-o
+	bin/main
+

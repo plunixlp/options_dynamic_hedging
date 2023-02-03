@@ -1,0 +1,7 @@
+g++ -w -Iinclude/ -L/usr/local/Cellar/quantlib/1.19/lib -lQuantLib src/main.cpp -o bin/main
+In file included from src/main.cpp:1:
+src/dynamic_hedging.cpp:8:10: fatal error: 'ql/quantlib.hpp' file not found
+#include <ql/quantlib.hpp>
+         ^~~~~~~~~~~~~~~~~
+1 error generated.
+make: *** [bin/main] Error 1

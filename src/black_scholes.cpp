@@ -3,21 +3,24 @@
 using namespace std;
 
 // Default Constructor
-BlackScholes::BlackScholes() : 
+
+BlackScholes::BlackScholes() :
 Option() {
     type = ' ';
 }
 
 // Parametrized Constructor
-BlackScholes::BlackScholes(char rhs_type, double strike_price, double current_price, double rate, double time_to_maturity, double volatility, double dividend) : 
+
+BlackScholes::BlackScholes(char rhs_type, double strike_price, double current_price, double rate, double time_to_maturity, double volatility, double dividend) :
 Option(strike_price, current_price, rate, time_to_maturity, volatility, dividend) {
     type = rhs_type;
 }
 
 // Copy Constructor
-BlackScholes::BlackScholes(const BlackScholes &rhs){
+
+BlackScholes::BlackScholes(const BlackScholes &rhs) {
     type = rhs.type;
-    K = rhs.K;   
+    K = rhs.K;
     S = rhs.S;
     r = rhs.r;
     T = rhs.T;
@@ -26,7 +29,8 @@ BlackScholes::BlackScholes(const BlackScholes &rhs){
 };
 
 // Destructor
-BlackScholes::~BlackScholes(){
+
+BlackScholes::~BlackScholes() {
 }
 
 // Helper Function to calculate the Gaussian Cumuliative Distribution Function (CDF)
@@ -36,11 +40,12 @@ double GaussianCDF(double d) {
 }
 
 // Black Scholes Pricing Function
-double BlackScholes::getPrice(){
-    
+
+double BlackScholes::getPrice() {
+
     // Calculating d1:
-    double num1 = log(S/K);
-    double num2 = ((0.5 * pow(sigma,2)) + r - d) * T; 
+    double num1 = log(S / K);
+    double num2 = ((0.5 * pow(sigma, 2)) + r - d) * T;
     double den = sigma * sqrt(T);
     double d1 = (num1 + num2) / den;
 
@@ -56,21 +61,20 @@ double BlackScholes::getPrice(){
         nd1 = GaussianCDF(d1);
         nd2 = GaussianCDF(d2);
         return (nd1_coeff * nd1) - (nd2_coeff * nd2);
-    }
-    else if (type == 'p') {
+    } else if (type == 'p') {
         nd1 = GaussianCDF(-d1);
         nd2 = GaussianCDF(-d2);
         return (nd2_coeff * nd2) - (nd1_coeff * nd1);
-    }
-    else return 0;
+    } else return 0;
 }
 
 // Black Scholes Delta Function
-double BlackScholes::getDelta(){
-    
+
+double BlackScholes::getDelta() {
+
     // Calculating d1:
-    double num1 = log(S/K);
-    double num2 = ((0.5 * pow(sigma,2)) + r - d) * T; 
+    double num1 = log(S / K);
+    double num2 = ((0.5 * pow(sigma, 2)) + r - d) * T;
     double den = sigma * sqrt(T);
     double d1 = (num1 + num2) / den;
 
@@ -81,19 +85,17 @@ double BlackScholes::getDelta(){
     if (type == 'c') {
         nd1 = GaussianCDF(d1);
         return exp(-d * T) * nd1;
-    }
-    else if (type == 'p') {
+    } else if (type == 'p') {
         nd1 = GaussianCDF(-d1);
         return exp(-d * T) * (nd1 - 1);
-    }
-    else return 0;
+    } else return 0;
 }
 
 double BlackScholes::firstDerivative() {
 
     // Calculating d1:
-    double num1 = log(S/K);
-    double num2 = ((0.5 * pow(sigma,2)) + r - d) * T; 
+    double num1 = log(S / K);
+    double num2 = ((0.5 * pow(sigma, 2)) + r - d) * T;
     double den = sigma * sqrt(T);
     double d1 = (num1 + num2) / den;
 
@@ -102,7 +104,7 @@ double BlackScholes::firstDerivative() {
 
     // Calculating the Derivative:
 
-    double deriv = 0.39894244888 * exp(-0.5 * pow(d1,2));
-    
+    double deriv = 0.39894244888 * exp(-0.5 * pow(d1, 2));
+
     return S * sqrt(T) * deriv * exp(-d * T);
 };
